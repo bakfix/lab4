@@ -1,4 +1,3 @@
-from enum import Enum
 import logging
 import math
 from fish import Fish
