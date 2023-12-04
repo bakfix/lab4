@@ -253,9 +253,13 @@ class ContainerProgram:
 
 if __name__ == "__main__":
     program = ContainerProgram()
+    previous_command = None
 
     while True:
-        command = input("Введите команду (FILE для обработки файла, или EXIT для выхода): ").strip()
+        command = input("Введите команду (FILE для обработки файла, EXIT для выхода, или нажмите Enter для повтора предыдущей команды): ").strip()
+
+        if not command and previous_command:
+            command = previous_command
 
         if command == "FILE":
             file_name = input("Введите имя файла: ")
@@ -263,4 +267,9 @@ if __name__ == "__main__":
         elif command == "EXIT":
             break
         else:
-            print("Неверная команда. Попробуйте снова.")
+            try:
+                program.process_line(0, command)
+                previous_command = command
+            except ValueError as e:
+                print(f"Ошибка: {e}")
+
