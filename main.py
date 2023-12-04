@@ -2,7 +2,7 @@ from enum import Enum
 import datetime
 import logging
 import math
-
+from fish import Fish
 
 class Bird:
     invalid_speed_values = set()
