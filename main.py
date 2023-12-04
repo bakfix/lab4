@@ -5,11 +5,6 @@ from fish import Fish
 from bird import Bird
 from insects import Insects
 
-
-
-
-
-
 class Node:
     def __init__(self, data):
         self.data = data
