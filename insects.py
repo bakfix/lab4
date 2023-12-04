@@ -1,25 +1,19 @@
-import logging
 import datetime
+import logging
+
 class Insects:
     def __init__(self, name, size, date, line_number):
         self.name = name
         self.line_number = line_number
 
-        if self.is_valid_size(size):
-            self.size = float(size)
-        else:
-            error_message = f"Error in line {self.line_number}: Недопустимый формат размера для насекомого ({name})"
-            print(error_message)
-            logging.error(error_message)
-            self.size = None
+        if not self.is_valid_size(size):
+            self.handle_invalid_data(f"Недопустимый формат размера для насекомого ({name})")
 
-        if self.is_valid_date(date):
-            self.date = date
-        else:
-            error_message = f"Error in line {self.line_number}: Недопустимый формат даты для насекомого ({name})"
-            print(error_message)
-            logging.error(error_message)
-            self.date = None
+        if not self.is_valid_date(date):
+            self.handle_invalid_data(f"Недопустимый формат даты для насекомого ({name})")
+
+        self.size = float(size)
+        self.date = datetime.datetime.strptime(date, "%d:%m:%Y")
 
     def is_valid_size(self, size):
         try:
@@ -35,8 +29,14 @@ class Insects:
         except ValueError:
             return False
 
+    def handle_invalid_data(self, error_message):
+        logging.error(f"Error in line {self.line_number}: {error_message}")
+        print(f"Error in line {self.line_number}: {error_message}")
+        self.size = None
+        self.date = None
+
     def __str__(self):
         if self.size is not None and self.date is not None:
-            return f"INSECTS, {self.name}, {self.size}, {self.date}"
+            return f"INSECTS, {self.name}, {self.size}, {self.date.strftime('%d:%m:%Y')}"
         else:
             return f"Error in line {self.line_number}. Неправильная дата или размер"
