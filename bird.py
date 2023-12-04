@@ -1,27 +1,20 @@
 import logging
 
-
 class Bird:
-    invalid_speed_values = set()
-
     def __init__(self, name, speed, line_number):
         self.name = name
+        self.speed = self.parse_speed(speed, line_number)
+
+    def parse_speed(self, speed, line_number):
         try:
             parsed_speed = float(speed)
             if parsed_speed < 0.0:
                 raise ValueError("Скорость птицы не может быть отрицательной")
-            self.speed = parsed_speed
+            return parsed_speed
         except ValueError:
-            self.speed = 0.0
-            if speed not in Bird.invalid_speed_values:
-                Bird.invalid_speed_values.add(speed)
-                logging.error(
-                    f"Error in line {line_number}: Недопустимое значение скорости для птицы ({name}). Используйте дробное число.")
-                print(
-                    f"Error in line {line_number}: Недопустимое значение скорости для птицы ({name}). Используйте дробное число.")
+            logging.error(f"Error in line {line_number}: Недопустимое значение скорости для птицы ({self.name}). Используйте дробное число.")
+            print(f"Error in line {line_number}: Недопустимое значение скорости для птицы ({self.name}). Используйте дробное число.")
+            return 0.0
 
     def __str__(self):
-        if self.speed != 0.0:
-            return f"BIRD, {self.name}, {self.speed}"
-        else:
-            return f"Error in line: {self.name}"
+        return f"BIRD, {self.name}, {self.speed}"
