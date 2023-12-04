@@ -1,9 +1,11 @@
 from enum import Enum
 
+
 class Habitat(Enum):
     OCEAN = "OCEAN"
     RIVER = "RIVER"
     SEA = "SEA"
+
 
 class Fish:
     def __init__(self, name, habitat):

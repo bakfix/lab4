@@ -1,73 +1,15 @@
 from enum import Enum
-import datetime
 import logging
 import math
 from fish import Fish
-
-class Bird:
-    invalid_speed_values = set()
-
-    def __init__(self, name, speed, line_number):
-        self.name = name
-        try:
-            parsed_speed = float(speed)
-            if parsed_speed < 0.0:
-                raise ValueError("Скорость птицы не может быть отрицательной")
-            self.speed = parsed_speed
-        except ValueError:
-            self.speed = 0.0
-            if speed not in Bird.invalid_speed_values:
-                Bird.invalid_speed_values.add(speed)
-                logging.error(f"Error in line {line_number}: Недопустимое значение скорости для птицы ({name}). Используйте дробное число.")
-                print(f"Error in line {line_number}: Недопустимое значение скорости для птицы ({name}). Используйте дробное число.")
-
-    def __str__(self):
-        if self.speed != 0.0:
-            return f"BIRD, {self.name}, {self.speed}"
-        else:
-            return f"Error in line: {self.name}"
+from bird import Bird
+from insects import Insects
 
 
-class Insects:
-    def __init__(self, name, size, date, line_number):
-        self.name = name
-        self.line_number = line_number
 
-        if self.is_valid_size(size):
-            self.size = float(size)
-        else:
-            error_message = f"Error in line {self.line_number}: Недопустимый формат размера для насекомого ({name})"
-            print(error_message)
-            logging.error(error_message)
-            self.size = None
 
-        if self.is_valid_date(date):
-            self.date = date
-        else:
-            error_message = f"Error in line {self.line_number}: Недопустимый формат даты для насекомого ({name})"
-            print(error_message)
-            logging.error(error_message)
-            self.date = None
 
-    def is_valid_size(self, size):
-        try:
-            float(size)
-            return True
-        except ValueError:
-            return False
 
-    def is_valid_date(self, date):
-        try:
-            datetime.datetime.strptime(date, "%d:%m:%Y")
-            return True
-        except ValueError:
-            return False
-
-    def __str__(self):
-        if self.size is not None and self.date is not None:
-            return f"INSECTS, {self.name}, {self.size}, {self.date}"
-        else:
-            return f"Error in line {self.line_number}. Неправильная дата или размер"
 class Node:
     def __init__(self, data):
         self.data = data
@@ -188,6 +130,7 @@ class ContainerProgram:
                 break
 
             current = current.next
+
     def remove_objects(self, condition_func):
         if not self.container.head or self.container.head.next == self.container.head:
             self.container.head = None
@@ -231,6 +174,7 @@ class ContainerProgram:
             return obj.name == name
 
         self.container.remove(condition_func)
+
     def print_container(self):
         print(self.container)
         self.logger.info("Выведено содержимое контейнера")
@@ -311,6 +255,7 @@ class ContainerProgram:
                     error_message = f"Ошибка в строке {line_number}: {str(e)}"
                     self.logger.error(error_message)
                     print(error_message)
+
 
 if __name__ == "__main__":
     program = ContainerProgram()

@@ -1,5 +1,6 @@
 import logging
 
+
 class Bird:
     invalid_speed_values = set()
 
@@ -14,8 +15,10 @@ class Bird:
             self.speed = 0.0
             if speed not in Bird.invalid_speed_values:
                 Bird.invalid_speed_values.add(speed)
-                logging.error(f"Error in line {line_number}: Недопустимое значение скорости для птицы ({name}). Используйте дробное число.")
-                print(f"Error in line {line_number}: Недопустимое значение скорости для птицы ({name}). Используйте дробное число.")
+                logging.error(
+                    f"Error in line {line_number}: Недопустимое значение скорости для птицы ({name}). Используйте дробное число.")
+                print(
+                    f"Error in line {line_number}: Недопустимое значение скорости для птицы ({name}). Используйте дробное число.")
 
     def __str__(self):
         if self.speed != 0.0:
