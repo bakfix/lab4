@@ -15,5 +15,6 @@ class Fish:
         else:
             raise ValueError(f"Невозможный ареал обитания для рыбы ({name})")
 
+
     def __str__(self):
         return f"FISH, {self.name}, {self.habitat}"
