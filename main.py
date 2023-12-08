@@ -206,7 +206,7 @@ class ContainerProgram:
                             else:
                                 print(f"Error in line {line_number}: Недопустимые данные для насекомого ({data[1]})")
                         else:
-                            raise ValueError(f"Ошибка в строке {line_number}: Недопустимая команда ADD")
+                            raise ValueError(f": Недопустимая команда ADD")
 
                         self.add_object(obj)
                     elif command == "REM":
@@ -238,13 +238,11 @@ class ContainerProgram:
                         self.remove_objects(remove_condition)
 
 
-
                     elif command == "PRINT":
                         self.print_container()
                     else:
-                        name_to_remove = condition
-                        self.remove_objects_by_name(name_to_remove)
-                        self.remove_objects(remove_condition)
+                        raise ValueError(f": Недопустимая команда {command}")
+
                 except ValueError as e:
                     error_message = f"Ошибка в строке {line_number}: {str(e)}"
                     self.logger.error(error_message)
